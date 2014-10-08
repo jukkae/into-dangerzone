@@ -1,4 +1,5 @@
 package core;
+
 import graphics.Camera;
 
 import java.awt.event.KeyEvent;
@@ -19,28 +20,31 @@ public class IntoDangerzone extends PApplet {
 
 	/** Number of particles drawn */
 	public static final int PARTICLE_COUNT = 1500;
-	
+
 	/** Whether to draw the xyz-axes */
 	public static final boolean DRAW_AXES = false;
-	
+
 	/** Threshold for clamping physics simulation, in seconds */
 	public static final float DT_THRESHOLD = 0.25f;
-	
+
 	/** Size of one physics step, in seconds */
 	public static final float PHYSICS_STEP_SIZE = 0.01f;
-	
+
 	private Camera camera;
 	private AudioAnalyser audioAnalyser;
 	private PhysicsEngine physicsEngine = new PhysicsEngine();
-	
+
 	// TODO: These don't belong here. Wrap in RenderMode or something like that.
 	private ParticleCloud particleCloud;
 	private ParticleCloudRenderer particleCloudRenderer;
 	
+
+
 	// Physics-related time variables
-	private long t;						// current time
-	private float dt;						// time since previous update
-	private float dtAccumulator = 0.0f;	// accumulator for time since previous update
+	private long t; // current time
+	private float dt; // time since previous update
+	private float dtAccumulator = 0.0f; // accumulator for time since previous
+										// update
 
 	// Text size parameters for kick, snare and hat
 	private float kickSize = 16, snareSize = 16, hatSize = 16;
@@ -53,10 +57,10 @@ public class IntoDangerzone extends PApplet {
 
 		initializeParticles();
 		initializeCamera();
-		
+
 		t = System.currentTimeMillis();
 	}
-	
+
 	@Override
 	public void draw() {
 		ambientLight(50, 50, 50);
@@ -64,7 +68,7 @@ public class IntoDangerzone extends PApplet {
 		step();
 		render();
 	}
-	
+
 	/**
 	 * Whether to draw the sketch as full screen (presentation mode).
 	 */
@@ -77,29 +81,39 @@ public class IntoDangerzone extends PApplet {
 	 * Initialize the state of the particle system.
 	 */
 	private void initializeParticles() {
-		particleCloud = new LayeredParticleCloud(physicsEngine.getPhysicsObjectManager(), PARTICLE_COUNT, 3);
-		particleCloud.setExplosionEventProvider(new KickProvider(audioAnalyser));
-		
-		particleCloudRenderer = new ParticleCloudCubeRenderer(this, particleCloud);
-		particleCloudRenderer.setParticleSizeProvider(new SpectrumProvider(audioAnalyser));
+		particleCloud = new LayeredParticleCloud(
+				physicsEngine.getPhysicsObjectManager(), PARTICLE_COUNT, 3);
+		particleCloud
+				.setExplosionEventProvider(new KickProvider(audioAnalyser));
+
+		particleCloudRenderer = new ParticleCloudCubeRenderer(this,
+				particleCloud);
+		particleCloudRenderer.setParticleSizeProvider(new SpectrumProvider(
+				audioAnalyser));
 	}
 
 	/**
 	 * Initialize camera position.
 	 */
 	private void initializeCamera() {
-		Vector3D cameraPos = new Vector3D(0,0,1200);
-		Vector3D cameraCenter = new Vector3D(0,0,0);
-		
+		Vector3D cameraPos = new Vector3D(0, 0, 1200);
+		Vector3D cameraCenter = new Vector3D(0, 0, 0);
+
 		camera = new Camera(this, cameraPos, cameraCenter, 0, 1, 0);
-		camera.setPositionXIncrementEventProvider(new KeyboardInputProvider(KeyEvent.VK_RIGHT));
-		camera.setPositionXDecrementEventProvider(new KeyboardInputProvider(KeyEvent.VK_LEFT));
-		camera.setPositionYDecrementEventProvider(new KeyboardInputProvider(KeyEvent.VK_UP, KeyEvent.VK_SHIFT));
-		camera.setPositionYIncrementEventProvider(new KeyboardInputProvider(KeyEvent.VK_DOWN, KeyEvent.VK_SHIFT));
-		camera.setPositionZDecrementEventProvider(new KeyboardInputProvider(new int[] {KeyEvent.VK_UP, KeyEvent.VK_SHIFT}));
-		camera.setPositionZIncrementEventProvider(new KeyboardInputProvider(new int[] {KeyEvent.VK_DOWN, KeyEvent.VK_SHIFT}));
+		camera.setPositionXIncrementEventProvider(new KeyboardInputProvider(
+				KeyEvent.VK_RIGHT));
+		camera.setPositionXDecrementEventProvider(new KeyboardInputProvider(
+				KeyEvent.VK_LEFT));
+		camera.setPositionYDecrementEventProvider(new KeyboardInputProvider(
+				KeyEvent.VK_UP, KeyEvent.VK_SHIFT));
+		camera.setPositionYIncrementEventProvider(new KeyboardInputProvider(
+				KeyEvent.VK_DOWN, KeyEvent.VK_SHIFT));
+		camera.setPositionZDecrementEventProvider(new KeyboardInputProvider(
+				new int[] { KeyEvent.VK_UP, KeyEvent.VK_SHIFT }));
+		camera.setPositionZIncrementEventProvider(new KeyboardInputProvider(
+				new int[] { KeyEvent.VK_DOWN, KeyEvent.VK_SHIFT }));
 	}
-	
+
 	private void drawParticles() {
 		particleCloudRenderer.render();
 	}
@@ -123,10 +137,10 @@ public class IntoDangerzone extends PApplet {
 					150 + rightWaveform[i + 1] * 50);
 		}
 	}
-	
+
 	public void drawZCR() {
 		stroke(255);
-		fill(255,0,0);
+		fill(255, 0, 0);
 		float zcr = audioAnalyser.getZCR();
 		textSize(32);
 		text("ZCR in last frame: " + zcr, 100, -100, 0);
@@ -172,12 +186,13 @@ public class IntoDangerzone extends PApplet {
 		long newTime = System.currentTimeMillis();
 		dt = (newTime - t) / 1000.0f;
 		t = newTime;
-		
-		if(dt > DT_THRESHOLD) dt = DT_THRESHOLD;
-		
+
+		if (dt > DT_THRESHOLD)
+			dt = DT_THRESHOLD;
+
 		dtAccumulator += dt;
-		
-		while(dtAccumulator >= PHYSICS_STEP_SIZE) {
+
+		while (dtAccumulator >= PHYSICS_STEP_SIZE) {
 			particleCloud.update();
 			audioAnalyser.getFft().forward(audioAnalyser.getSong().mix);
 			physicsEngine.step(PHYSICS_STEP_SIZE);
@@ -202,7 +217,8 @@ public class IntoDangerzone extends PApplet {
 	}
 
 	public void mouseWheel(MouseEvent event) {
-		camera.setPositionZ(camera.getPosition().getZ() + event.getCount() * 100);
+		camera.setPositionZ(camera.getPosition().getZ() + event.getCount()
+				* 100);
 	}
 
 	public static void main(String args[]) {
