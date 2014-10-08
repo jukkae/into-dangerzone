@@ -14,13 +14,19 @@ public class WaterfallRenderer extends Renderer {
 
 	@Override
 	public void render() {
-
+		float x0 = 0;
+		float y0 = 0;
+		float z0 = 0;
+		
 		for (WaterfallObject object : waterfall.particles) {
 			float x = object.x;
 			float y = object.y;
 			float z = object.z;
 
-			parent.point(x, y, z);
+			parent.line(x0, y0, z0, x, y, z);
+			x0 = x;
+			y0 = y;
+			z0 = z;
 		}
 	}
 

@@ -1,6 +1,7 @@
 package waterfall;
 
 import java.util.ArrayList;
+import java.lang.Math;
 
 import core.InputProvider;
 
@@ -37,11 +38,14 @@ public class Waterfall {
 	public void update() {
 		float[] input = inputProvider.readInput();
 		for (WaterfallObject obj : particles) {
-			obj.z += 0.1;
+			obj.z += 1;
 			if (obj.z > 512) {
 				//respawn
 				obj.z = 0;
 				obj.y = -input[(int)obj.x/4];
+				//convert to log scale (dB)
+				//TODO check if this is correct
+				obj.y = (float) (10 * Math.log10(Math.abs(obj.y*obj.y)));
 			}
 		}
 	}
