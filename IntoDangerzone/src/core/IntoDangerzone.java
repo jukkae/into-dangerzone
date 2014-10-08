@@ -14,6 +14,8 @@ import particles.ParticleCloudRenderer;
 import physics.PhysicsEngine;
 import processing.core.*;
 import processing.event.MouseEvent;
+import waterfall.Waterfall;
+import waterfall.WaterfallRenderer;
 
 @SuppressWarnings("serial")
 public class IntoDangerzone extends PApplet {
@@ -38,7 +40,9 @@ public class IntoDangerzone extends PApplet {
 	private ParticleCloud particleCloud;
 	private ParticleCloudRenderer particleCloudRenderer;
 	
-
+	// TODO: These don't belong here either.
+	private Waterfall waterfall;
+	private WaterfallRenderer waterfallRenderer;
 
 	// Physics-related time variables
 	private long t; // current time
@@ -90,6 +94,16 @@ public class IntoDangerzone extends PApplet {
 				particleCloud);
 		particleCloudRenderer.setParticleSizeProvider(new SpectrumProvider(
 				audioAnalyser));
+	}
+	
+	/**
+	 * Initialize waterfall
+	 */
+	private void initializeWaterfall() {
+		waterfall = new Waterfall();
+		
+		waterfallRenderer = new WaterfallRenderer(this, waterfall);
+		waterfallRenderer.setInputProvider(new SpectrumProvider(audioAnalyser));
 	}
 
 	/**
