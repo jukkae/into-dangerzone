@@ -18,6 +18,10 @@ public class WaterfallRenderer extends Renderer {
 	@Override
 	public void render() {
 		// TODO Auto-generated method stub
+		parent.text("KIKKELI", 0, 0);
+		for ( WaterfallObject object : waterfall.particles){
+			
+		}
 	}
 	
 	public InputProvider<float[]> getInputProvider() {

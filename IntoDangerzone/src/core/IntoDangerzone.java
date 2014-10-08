@@ -15,6 +15,7 @@ import physics.PhysicsEngine;
 import processing.core.*;
 import processing.event.MouseEvent;
 import waterfall.Waterfall;
+import waterfall.WaterfallObjectManager;
 import waterfall.WaterfallRenderer;
 
 @SuppressWarnings("serial")
@@ -61,6 +62,8 @@ public class IntoDangerzone extends PApplet {
 
 		initializeParticles();
 		initializeCamera();
+		
+		initializeWaterfall();
 
 		t = System.currentTimeMillis();
 	}
@@ -100,10 +103,14 @@ public class IntoDangerzone extends PApplet {
 	 * Initialize waterfall
 	 */
 	private void initializeWaterfall() {
-		waterfall = new Waterfall();
+		waterfall = new Waterfall(new WaterfallObjectManager());
 		
 		waterfallRenderer = new WaterfallRenderer(this, waterfall);
 		waterfallRenderer.setInputProvider(new SpectrumProvider(audioAnalyser));
+	}
+	
+	private void drawWaterfall() {
+		waterfallRenderer.render();
 	}
 
 	/**
@@ -220,11 +227,12 @@ public class IntoDangerzone extends PApplet {
 	public void render() {
 		camera.update();
 		background(0);
-		drawParticles();
+		//drawParticles();
 		drawFFT();
 		drawScope();
 		drawBeats();
 		drawZCR();
+		drawWaterfall();
 
 		if (DRAW_AXES)
 			drawAxes();
