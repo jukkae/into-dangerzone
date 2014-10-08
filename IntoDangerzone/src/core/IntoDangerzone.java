@@ -33,6 +33,10 @@ public class IntoDangerzone extends PApplet {
 	/** Size of one physics step, in seconds */
 	public static final float PHYSICS_STEP_SIZE = 0.01f;
 
+	/** Number of waterfall particles */
+	public static final int WATERFALL_COUNT = 16384; // 128 lines of 128
+														// particles
+
 	private Camera camera;
 	private AudioAnalyser audioAnalyser;
 	private PhysicsEngine physicsEngine = new PhysicsEngine();
@@ -40,7 +44,7 @@ public class IntoDangerzone extends PApplet {
 	// TODO: These don't belong here. Wrap in RenderMode or something like that.
 	private ParticleCloud particleCloud;
 	private ParticleCloudRenderer particleCloudRenderer;
-	
+
 	// TODO: These don't belong here either.
 	private Waterfall waterfall;
 	private WaterfallRenderer waterfallRenderer;
@@ -62,7 +66,7 @@ public class IntoDangerzone extends PApplet {
 
 		initializeParticles();
 		initializeCamera();
-		
+
 		initializeWaterfall();
 
 		t = System.currentTimeMillis();
@@ -98,17 +102,17 @@ public class IntoDangerzone extends PApplet {
 		particleCloudRenderer.setParticleSizeProvider(new SpectrumProvider(
 				audioAnalyser));
 	}
-	
+
 	/**
 	 * Initialize waterfall
 	 */
 	private void initializeWaterfall() {
-		waterfall = new Waterfall(new WaterfallObjectManager());
-		
+		waterfall = new Waterfall(new WaterfallObjectManager(),
+				WATERFALL_COUNT, new SpectrumProvider(audioAnalyser));
+
 		waterfallRenderer = new WaterfallRenderer(this, waterfall);
-		waterfallRenderer.setInputProvider(new SpectrumProvider(audioAnalyser));
 	}
-	
+
 	private void drawWaterfall() {
 		waterfallRenderer.render();
 	}
@@ -218,6 +222,7 @@ public class IntoDangerzone extends PApplet {
 			audioAnalyser.getFft().forward(audioAnalyser.getSong().mix);
 			physicsEngine.step(PHYSICS_STEP_SIZE);
 			dtAccumulator -= PHYSICS_STEP_SIZE;
+			waterfall.update();
 		}
 	}
 
@@ -227,7 +232,7 @@ public class IntoDangerzone extends PApplet {
 	public void render() {
 		camera.update();
 		background(0);
-		//drawParticles();
+		// drawParticles();
 		drawFFT();
 		drawScope();
 		drawBeats();

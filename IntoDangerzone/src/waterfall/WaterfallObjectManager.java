@@ -2,20 +2,18 @@ package waterfall;
 
 import java.util.ArrayList;
 
-import physics.PhysicsObject;
-
 public class WaterfallObjectManager {
-	private ArrayList<PhysicsObject> objects = new ArrayList<PhysicsObject>();
-	
+	private ArrayList<WaterfallObject> objects = new ArrayList<WaterfallObject>();
+
 	public WaterfallObjectManager() {
-		
+
 	}
-	
-	public ArrayList<PhysicsObject> getObjects() {
+
+	public ArrayList<WaterfallObject> getObjects() {
 		return this.objects;
 	}
-	
-	void addObject(PhysicsObject object) {
+
+	void addObject(WaterfallObject object) {
 		this.objects.add(object);
 	}
 

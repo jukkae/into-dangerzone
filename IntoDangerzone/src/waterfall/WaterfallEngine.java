@@ -1,7 +1,5 @@
 package waterfall;
 
-import physics.PhysicsObject;
-
 public class WaterfallEngine {
 	private WaterfallObjectManager objectManager;
 
@@ -18,8 +16,8 @@ public class WaterfallEngine {
 	}
 
 	public void step() {
-		for (PhysicsObject object : this.objectManager.getObjects()) {
-			
+		for (WaterfallObject object : this.objectManager.getObjects()) {
+			object.z += 0.1;
 		}
 	}
 
