@@ -17,7 +17,10 @@ public class WaterfallRenderer extends Renderer {
 		float x0 = 0;
 		float y0 = 0;
 		float z0 = 0;
-		
+
+		parent.pushMatrix();
+		parent.translate(-(parent.width / 2), 0, 0);
+
 		for (WaterfallObject object : waterfall.particles) {
 			float x = object.x;
 			float y = object.y;
@@ -28,6 +31,8 @@ public class WaterfallRenderer extends Renderer {
 			y0 = y;
 			z0 = z;
 		}
+
+		parent.popMatrix();
 	}
 
 }

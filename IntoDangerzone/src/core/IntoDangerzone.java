@@ -34,7 +34,7 @@ public class IntoDangerzone extends PApplet {
 	public static final float PHYSICS_STEP_SIZE = 0.01f;
 
 	/** Number of waterfall particles */
-	public static final int WATERFALL_COUNT = 16384; // 128 lines of 128
+	public static final int WATERFALL_COUNT = 32768; // 128 lines of 256
 														// particles
 
 	private Camera camera;

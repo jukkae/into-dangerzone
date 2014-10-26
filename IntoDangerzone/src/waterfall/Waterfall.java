@@ -9,6 +9,7 @@ public class Waterfall {
 	protected ArrayList<WaterfallObject> particles = new ArrayList<WaterfallObject>();
 	protected WaterfallObjectManager objectManager;
 	protected int objectCount;
+	protected int rowWidth;
 	protected InputProvider<float[]> inputProvider;
 
 	public Waterfall(WaterfallObjectManager objectManager, int objectCount, InputProvider<float[]> inputProvider) {
@@ -17,13 +18,16 @@ public class Waterfall {
 		this.inputProvider = inputProvider;
 
 		float x = 0;
-		float y = 100;
+		float y = 0;
 		float z = 0;
+		
+		rowWidth = 256;
 
 		// initialize objects
+		// TODO 2D array
 		for (int i = 0; i < objectCount; i++) {
 			x = 0;
-			for (int j = 0; j < 128; j++) {
+			for (int j = 0; j < 256; j++) {
 				WaterfallObject obj = new WaterfallObject(x, y, z);
 				particles.add(obj);
 				objectManager.addObject(obj);
