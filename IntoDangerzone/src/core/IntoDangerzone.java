@@ -8,6 +8,7 @@ import math.Vector3D;
 import processing.core.*;
 import processing.event.MouseEvent;
 import scenes.lTree.*;
+import scenes.mandelbrot.Mandelbrot;
 import scenes.gameoflife.GameOfLifeScene;
 
 @SuppressWarnings("serial")
@@ -19,6 +20,7 @@ public class IntoDangerzone extends PApplet {
 	private SceneManager sceneManager = new SceneManager();
 	private GameOfLifeScene golScene;
 	private LTree lTreeScene;
+	private Mandelbrot mandelbrotScene;
 	
 	private Camera camera;
 	private AudioAnalyser audioAnalyser;
@@ -75,6 +77,9 @@ public class IntoDangerzone extends PApplet {
 		
 		lTreeScene = new LTree(this, audioAnalyser);
 		sceneManager.addScene(lTreeScene);
+		
+		mandelbrotScene = new Mandelbrot(this, audioAnalyser);
+		sceneManager.addScene(mandelbrotScene);
 		
 		sceneManager.setActiveScene(0);
 	}
