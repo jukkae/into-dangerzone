@@ -3,7 +3,7 @@ package scenes.gameoflife;
 import java.util.Random;
 
 class GameOfLife {
-
+	
 	/** Default birth rules */
 	public static final int[] DEFAULT_BIRTH_COUNTS = { 3 };
 
@@ -209,5 +209,13 @@ class GameOfLife {
 
 	public float getDensity() {
 		return density;
+	}
+
+	public void clear() {
+		for (int i = 0; i < getColumnCount(); i++){
+			for (int j = 0; j < getRowCount(); j++){
+				setCellState(i, j, false);
+			}
+		}
 	}
 }
