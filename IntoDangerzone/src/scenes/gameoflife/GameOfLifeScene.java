@@ -15,6 +15,12 @@ import processing.core.PApplet;
 
 public class GameOfLifeScene extends Scene implements KeyEventDispatcher {
 
+	private enum Mode {
+		AUDIO, MANUAL;
+	}
+
+	private Mode mode;
+
 	private float generationTimer;
 	private float stepDuration;
 
@@ -52,6 +58,8 @@ public class GameOfLifeScene extends Scene implements KeyEventDispatcher {
 
 		this.rand = new Random();
 
+		this.mode = Mode.AUDIO;
+
 		this.bomb = new boolean[3][3];
 		bomb[0][1] = true;
 		bomb[1][0] = true;
@@ -71,13 +79,15 @@ public class GameOfLifeScene extends Scene implements KeyEventDispatcher {
 		if (generationTimer < 0) {
 			generationTimer = stepDuration;
 			gol.stepGeneration();
-			if (beatListener.isKick()) {
-				gol.insertShape(bomb, rand.nextInt(gol.getColumnCount()),
-						rand.nextInt(gol.getRowCount()));
-			}
-			if (beatListener.isHat()) {
-				RuleSet ruleSet = RULE_SETS[rand.nextInt(RULE_SETS.length)];
-				gol.setRuleSet(ruleSet);
+			if (mode == Mode.AUDIO) {
+				if (beatListener.isKick()) {
+					gol.insertShape(bomb, rand.nextInt(gol.getColumnCount()),
+							rand.nextInt(gol.getRowCount()));
+				}
+				if (beatListener.isHat()) {
+					RuleSet ruleSet = RULE_SETS[rand.nextInt(RULE_SETS.length)];
+					gol.setRuleSet(ruleSet);
+				}
 			}
 		}
 	}
@@ -137,6 +147,23 @@ public class GameOfLifeScene extends Scene implements KeyEventDispatcher {
 		case KeyEvent.VK_B:
 			gol.insertShape(bomb, rand.nextInt(gol.getColumnCount()),
 					rand.nextInt(gol.getRowCount()));
+			break;
+		case KeyEvent.VK_C:
+			gol.clear();
+			break;
+		case KeyEvent.VK_M:
+			changeMode();
+			break;
+		}
+	}
+
+	public void changeMode() {
+		switch (mode) {
+		case AUDIO:
+			mode = Mode.MANUAL;
+			break;
+		case MANUAL:
+			mode = Mode.AUDIO;
 			break;
 		}
 	}
