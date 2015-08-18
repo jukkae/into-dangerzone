@@ -14,6 +14,7 @@ import scenes.julia.JuliaScene;
 import scenes.lTree.*;
 import scenes.scope.ScopeScene;
 import scenes.scopeAndFFT.ScopeAndFFTScene;
+import scenes.attractors.AttractorsScene;
 import scenes.boids.BoidsScene;
 import scenes.gameoflife.GameOfLifeScene;
 
@@ -38,6 +39,7 @@ public class IntoDangerzone extends PApplet {
 	private JuliaScene juliaScene;
 	private ScopeScene scopeScene;
 	private ScopeAndFFTScene scopeAndFFTScene;
+	private AttractorsScene attractorsScene;
 	
 	private long currentTime;
 	
@@ -65,7 +67,7 @@ public class IntoDangerzone extends PApplet {
 	 */
 	@Override
 	public boolean sketchFullScreen() {
-		return false;
+		return true;
 	}
 	
 	/**
@@ -104,6 +106,9 @@ public class IntoDangerzone extends PApplet {
 		
 		scopeAndFFTScene = new ScopeAndFFTScene(this, getAudioSource());
 		sceneManager.addScene(scopeAndFFTScene);
+		
+		attractorsScene = new AttractorsScene(this, getAudioSource());
+		sceneManager.addScene(attractorsScene);
 		
 		sceneManager.setActiveScene(0);
 	}

@@ -8,6 +8,13 @@ public class Vector2D {
 	private float x, y;
 	private float length;
 
+	public static Vector2D fromPolar(float r, float theta) {
+		return new Vector2D(
+				(float) (r * Math.cos(theta)), 
+				(float) (r * Math.sin(theta))
+		);
+	}
+
 	public Vector2D(float x, float y) {
 		this.x = x;
 		this.y = y;
@@ -136,17 +143,18 @@ public class Vector2D {
 		return position.subtract(this).toLength(this.getLength());
 	}
 
-
 	/**
 	 * Returns vectors heading in radians.
+	 * 
 	 * @return heading in radians
 	 */
 	public float getHeading() {
 		return (float) java.lang.Math.atan2(y, x);
 	}
-	
+
 	/**
 	 * Returns distance to another vector.
+	 * 
 	 * @param position
 	 * @return distance to position
 	 */
