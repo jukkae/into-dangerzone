@@ -38,7 +38,7 @@ public class AttractorsScene extends core.Scene {
 	}
 
 	private void initialize() {
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 100; i++) {
 			Satellite s = new Satellite(rand.nextFloat() * applet.width,
 					rand.nextFloat() * applet.height, applet.width, applet.height);
 			satellites.add(s);
