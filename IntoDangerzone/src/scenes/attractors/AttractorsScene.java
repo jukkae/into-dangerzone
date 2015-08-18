@@ -38,16 +38,17 @@ public class AttractorsScene extends core.Scene {
 	}
 
 	private void initialize() {
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 1000; i++) {
 			Satellite s = new Satellite(rand.nextFloat() * applet.width,
 					rand.nextFloat() * applet.height, applet.width, applet.height);
 			satellites.add(s);
 		}
 
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 5; i++) {
 			Vector2D location = new Vector2D(rand.nextFloat() * applet.width,
 					rand.nextFloat() * applet.height);
-			Attractor a = new Attractor(location);
+			float g = rand.nextFloat() * 200;
+			Attractor a = new Attractor(location, g);
 			attractors.add(a);
 		}
 

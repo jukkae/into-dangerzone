@@ -17,12 +17,12 @@ public class AttractorsRenderer {
 
 	public void render() {
 		for (Satellite s : satellites) {
-			applet.stroke(0, 0, 0, 7);
-			applet.fill(0, 0, 0, 7);
+			applet.stroke(0, 0, 0, 15);
+			applet.fill(0, 0, 0, 15);
 			applet.pushMatrix();
 			applet.translate(-applet.width / 2, -applet.height / 2);
 			applet.translate(s.location.getX(), s.location.getY());
-			applet.ellipse(0, 0, 5, 5);
+			applet.point(0, 0);
 			applet.popMatrix();
 		}
 	}
