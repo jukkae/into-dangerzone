@@ -134,11 +134,14 @@ public class AttractorsScene extends core.Scene implements KeyEventDispatcher {
 		case KeyEvent.VK_LEFT:
 			removeAttractor();
 			break;
-		case KeyEvent.VK_SPACE:
+		case KeyEvent.VK_C:
 			attractorsRenderer.wipe();
 			break;
 		case KeyEvent.VK_M:
 			attractorsRenderer.toggleTrails();
+			break;
+		case KeyEvent.VK_V:
+			attractorsRenderer.toggleColorScene();
 			break;
 		}
 	}

@@ -11,32 +11,38 @@ public class AttractorsRenderer {
 		TINY, WEIGHTED, AGE
 	};
 
-	public enum ColorScheme {
-		WHITE_ON_BLACK, BLACK_ON_WHITE
-	}
-
 	private PApplet applet;
 	private ArrayList<Satellite> satellites;
 
 	public RenderMode renderMode;
-	public ColorScheme colorScheme;
 	public boolean trails;
+	private boolean wipe = true;
+	private boolean invertColors;
 
 	public AttractorsRenderer(PApplet applet, ArrayList<Satellite> satellites) {
 		this.applet = applet;
 		this.satellites = satellites;
 		this.renderMode = RenderMode.TINY;
-		this.colorScheme = ColorScheme.BLACK_ON_WHITE;
 		this.trails = false;
 	}
 
 	public void render() {
+		if (wipe) {
+			wipe();
+			wipe = false;
+		}
 		if (!trails) {
 			wipe();
 		}
 
-		applet.stroke(0, 0, 0, 255);
-		applet.fill(0, 0, 0, 255);
+		if (invertColors) {
+			applet.stroke(255, 255, 255, 255);
+			applet.fill(255, 255, 255, 255);
+
+		} else {
+			applet.stroke(0, 0, 0, 255);
+			applet.fill(0, 0, 0, 255);
+		}
 
 		for (Satellite s : satellites) {
 			applet.pushMatrix();
@@ -55,16 +61,18 @@ public class AttractorsRenderer {
 	public void toggleTrails() {
 		trails = !trails;
 	}
-	
-	public void toggleColorScene() {
 
+	public void toggleColorScene() {
+		invertColors = !invertColors;
+		wipe();
 	}
 
 	public void wipe() {
-		if (this.colorScheme == ColorScheme.BLACK_ON_WHITE) {
-			applet.background(255);
-		} else {
+		wipe = true;
+		if (invertColors)
 			applet.background(0);
-		}
+		else
+			applet.background(255);
+		return;
 	}
 }
