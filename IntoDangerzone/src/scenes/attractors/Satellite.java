@@ -27,7 +27,6 @@ public class Satellite {
 	}
 
 	public void update() {
-		// TODO Auto-generated method stub
 		float x = location.getX();
 		float y = location.getY();
 	    if (x >= width || x < 0) {
@@ -48,7 +47,6 @@ public class Satellite {
 	}
 
 	public void applyForce(Vector2D f) {
-		// TODO Auto-generated method stub
 	    float velX = (float) (speed * Math.cos(theta));
 	    float velY = (float) (speed * Math.sin(theta));
 	    float accX = (float) (f.getLength() * Math.cos(f.getHeading()));

@@ -1,6 +1,9 @@
 package scenes.attractors;
 
 import java.applet.Applet;
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -10,7 +13,7 @@ import audio.ZcrListener;
 import ddf.minim.AudioSource;
 import processing.core.PApplet;
 
-public class AttractorsScene extends core.Scene {
+public class AttractorsScene extends core.Scene implements KeyEventDispatcher {
 
 	private AttractorsRenderer attractorsRenderer;
 	private BeatListener beatListener;
@@ -38,20 +41,43 @@ public class AttractorsScene extends core.Scene {
 	}
 
 	private void initialize() {
-		for (int i = 0; i < 1000; i++) {
-			Satellite s = new Satellite(rand.nextFloat() * applet.width,
-					rand.nextFloat() * applet.height, applet.width, applet.height);
-			satellites.add(s);
+		for (int i = 0; i < 0; i++) {
+			addRandomSatellite();
 		}
 
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 0; i++) {
 			Vector2D location = new Vector2D(rand.nextFloat() * applet.width,
 					rand.nextFloat() * applet.height);
 			float g = rand.nextFloat() * 200;
 			Attractor a = new Attractor(location, g);
 			attractors.add(a);
 		}
-
+	}
+	
+	private void addRandomSatellite() {
+		Satellite s = new Satellite(rand.nextFloat() * applet.width,
+				rand.nextFloat() * applet.height, applet.width, applet.height);
+		satellites.add(s);
+	}
+	
+	private void removeSatellite() {
+		if(satellites.size() > 0) {
+			satellites.remove(satellites.size()-1);
+		}
+	}
+	
+	private void addRandomAttractor() {
+		Vector2D location = new Vector2D(rand.nextFloat() * applet.width,
+				rand.nextFloat() * applet.height);
+		float g = rand.nextFloat() * 200;
+		Attractor a = new Attractor(location, g);
+		attractors.add(a);
+	}
+	
+	private void removeAttractor() {
+		if(attractors.size() > 0) {
+			attractors.remove(attractors.size()-1);
+		}
 	}
 
 	@Override
@@ -74,14 +100,47 @@ public class AttractorsScene extends core.Scene {
 
 	@Override
 	public void activated() {
-		// TODO Auto-generated method stub
 		attractorsRenderer.wipe();
+		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(this);
+
 	}
 
 	@Override
 	public void deactivated() {
-		// TODO Auto-generated method stub
+		KeyboardFocusManager.getCurrentKeyboardFocusManager().removeKeyEventDispatcher(this);
+	}
 
+	@Override
+	public boolean dispatchKeyEvent(KeyEvent e) {
+		switch (e.getID()) {
+		case KeyEvent.KEY_PRESSED:
+			keyPress(e.getKeyCode());
+			break;
+		}
+		return false;
+	}
+
+	private void keyPress(int code) {
+		switch (code) {
+		case KeyEvent.VK_UP:
+			addRandomSatellite();
+			break;
+		case KeyEvent.VK_DOWN:
+			removeSatellite();
+			break;
+		case KeyEvent.VK_RIGHT:
+			addRandomAttractor();
+			break;
+		case KeyEvent.VK_LEFT:
+			removeAttractor();
+			break;
+		case KeyEvent.VK_SPACE:
+			attractorsRenderer.wipe();
+			break;
+		case KeyEvent.VK_M:
+			attractorsRenderer.toggleTrails();
+			break;
+		}
 	}
 
 }

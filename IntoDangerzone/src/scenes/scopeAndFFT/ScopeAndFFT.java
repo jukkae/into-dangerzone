@@ -17,6 +17,7 @@ public class ScopeAndFFT {
 
 	private FFT spectrum;
 	private float[] waveform;
+	
 	private float[] realSpectrum;
 	
 	private float waveformScalingFactor = 0.0f;
