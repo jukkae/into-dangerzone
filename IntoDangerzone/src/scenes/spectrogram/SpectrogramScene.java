@@ -1,45 +1,63 @@
 package scenes.spectrogram;
 
 import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
 
+import ddf.minim.AudioSource;
+import audio.AudioAnalyser;
 import processing.core.PApplet;
 
 public class SpectrogramScene extends core.Scene implements KeyEventDispatcher {
 
-	public SpectrogramScene(PApplet parent) {
+	private SpectrogramRenderer renderer;
+	private AudioAnalyser audioAnalyser;
+
+	public SpectrogramScene(PApplet parent, AudioSource audioSource) {
 		super(parent);
-		// TODO Auto-generated constructor stub
+		renderer = new SpectrogramRenderer(parent, audioSource);
+		this.audioAnalyser = new AudioAnalyser(parent, audioSource);
 	}
 
 	@Override
 	public void update(float dtSeconds) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void render() {
-		// TODO Auto-generated method stub
-		
+		renderer.render();
 	}
 
 	@Override
 	public void activated() {
-		// TODO Auto-generated method stub
-		
+		KeyboardFocusManager.getCurrentKeyboardFocusManager()
+				.addKeyEventDispatcher(this);
 	}
 
 	@Override
 	public void deactivated() {
-		// TODO Auto-generated method stub
-		
+		KeyboardFocusManager.getCurrentKeyboardFocusManager()
+				.removeKeyEventDispatcher(this);
 	}
 
 	@Override
 	public boolean dispatchKeyEvent(KeyEvent e) {
-		// TODO Auto-generated method stub
+		switch (e.getID()) {
+		case KeyEvent.KEY_PRESSED:
+			keyPress(e.getKeyCode());
+			break;
+		}
 		return false;
+	}
+
+	private void keyPress(int code) {
+		// TODO Auto-generated method stub
+		switch (code) {
+		default:
+			break;
+		}
 	}
 
 }

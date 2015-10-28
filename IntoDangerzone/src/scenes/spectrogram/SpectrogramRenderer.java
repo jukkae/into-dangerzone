@@ -1,19 +1,30 @@
 package scenes.spectrogram;
 
+import java.util.ArrayList;
+
+import ddf.minim.AudioSource;
 import processing.core.PApplet;
 import graphics.Renderer;
 
 public class SpectrogramRenderer extends Renderer {
 
-	public SpectrogramRenderer(PApplet parent) {
+	private AudioSource audioSource;
+	private PApplet applet;
+	private int width;
+	private int height;
+
+	public SpectrogramRenderer(PApplet parent, AudioSource audioSource) {
 		super(parent);
-		// TODO Auto-generated constructor stub
+		this.audioSource = audioSource;
+		this.applet = parent;
+		width = applet.width;
+		height = applet.height;
 	}
 
 	@Override
 	public void render() {
-		// TODO Auto-generated method stub
-		
+		applet.background(0);
+
 	}
 
 }
