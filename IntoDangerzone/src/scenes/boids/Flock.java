@@ -52,6 +52,13 @@ class Flock {
 					+ boids.get(0).rules.getWeight());
 		}
 	}
+	
+	void removeBoid() {
+		if (boids.size() > 1) {
+			Boid b = boids.get(boids.size()-1);
+			boids.remove(b);
+		}
+	}
 
 	void newRules() {
 		rules.randomizeSomething();

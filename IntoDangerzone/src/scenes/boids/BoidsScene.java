@@ -1,12 +1,15 @@
 package scenes.boids;
 
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
+import java.awt.event.KeyEvent;
 import java.util.Random;
 
 import ddf.minim.AudioSource;
 import audio.BeatListener;
 import processing.core.PApplet;
 
-public class BoidsScene extends core.Scene {
+public class BoidsScene extends core.Scene implements KeyEventDispatcher  {
 
 	private Flock flock;
 	private BoidsRenderer boidsRenderer;
@@ -49,6 +52,30 @@ public class BoidsScene extends core.Scene {
 			}
 		}
 	}
+	
+	@Override
+	public boolean dispatchKeyEvent(KeyEvent e) {
+		switch(e.getID()) {
+		case KeyEvent.KEY_PRESSED:
+			keyPress(e.getKeyCode());
+			break;
+		}
+		return false;
+	}
+	
+	private void keyPress(int code) {
+		switch(code) {
+		case KeyEvent.VK_UP:
+			flock.newBoid();
+			break;
+		case KeyEvent.VK_DOWN:
+			flock.removeBoid();
+			break;
+		case KeyEvent.VK_SPACE:
+			flock.newRules();
+			break;
+		}
+	}
 
 	@Override
 	public void render() {
@@ -58,13 +85,13 @@ public class BoidsScene extends core.Scene {
 	@Override
 	public void activated() {
 		// TODO Auto-generated method stub
-
+		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(this);
 	}
 
 	@Override
 	public void deactivated() {
 		// TODO Auto-generated method stub
-
+		KeyboardFocusManager.getCurrentKeyboardFocusManager().removeKeyEventDispatcher(this);
 	}
 
 }

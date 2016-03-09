@@ -38,6 +38,8 @@ public class LTree extends core.Scene implements KeyEventDispatcher {
 
 	float curlXTarget = 0;
 	float curlYTarget = 0;
+	
+	float alpha = 75;
 
 	float chanceOfChangeFromLines = 0.1f;
 	float chanceOfChangeFromPoints = 0.4f;
@@ -76,7 +78,7 @@ public class LTree extends core.Scene implements KeyEventDispatcher {
 	public void render() {
 		clearBackground();
 		parent.translate(0, 0);
-		parent.stroke(0, 0, 0, 50);
+		parent.stroke(0, 0, 0, alpha);
 		curlX += (PApplet.radians((float) (curlXTarget)) - curlX) / delay;
 		curlY += (PApplet.radians((float) (curlYTarget)) - curlY) / delay;
 		branch(parent.height / 3, branchNumber);
@@ -178,8 +180,6 @@ public class LTree extends core.Scene implements KeyEventDispatcher {
 		case KeyEvent.VK_SPACE:
 			changeRenderingMode();
 			break;
-		case KeyEvent.VK_D:
-			break;
 		case KeyEvent.VK_UP:
 			curlXTarget += 10;
 			break;
@@ -192,6 +192,21 @@ public class LTree extends core.Scene implements KeyEventDispatcher {
 		case KeyEvent.VK_LEFT:
 			curlYTarget -= 10;
 			break;
+		case KeyEvent.VK_D:
+			growth -= 0.05;
+			break;
+		case KeyEvent.VK_U:
+			if (branchRatio < branchRatioTarget)
+				branchRatio += 100*branchRatioSpeed;
+			if (growth < growthTarget)
+				growth += 100*growthSpeed;
+			break;
+		case KeyEvent.VK_C:
+			growth = 0.15f;
+			branchRatio = 0;
+			break;
+		case KeyEvent.VK_B:
+			changeRenderingMode();
 		}
 	}
 

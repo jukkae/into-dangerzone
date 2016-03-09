@@ -26,7 +26,7 @@ public class IntoDangerzone extends PApplet {
 		FILE, LINE_IN
 	}
 	
-	public static AudioMode audioMode = AudioMode.LINE_IN;
+	public static AudioMode audioMode = AudioMode.FILE;
 	public static String audioFilePath;
 	private AudioSource audioSource;
 	
